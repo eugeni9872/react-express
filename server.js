@@ -22,7 +22,6 @@ const getHTMLTamplate = (title,app, data) => {
                 
                 <script>window.__APP_DATA__=${JSON.stringify(data)}</script>
                 <div id="app">${app}</div>
-
                 <script src="/static/bundle.js" async=""></script>
             </body>
         </html>
@@ -44,14 +43,24 @@ app.get('*', (req,res) => {
             {title:'Title2', content:'Content2'}
         ]
     }
+    for(let ruta of Rutas) {
+        if(req.url.match(ruta.path)) {
+           
+            const name = req.url == '/' ? '/index': req.url;
+            
+            Promise.all([
+                import(`./src${name}.js`)
+            ]).then(([Componente]) => {
+                Componente.default.getData().then(data => {
+                    const app = ReactDOMServer.renderToString(<Componente.default data={data}  />);
+                    let template = getHTMLTamplate('EUGENI SSR', app, data);
+                
+                    res.send(template)
+                })
+            })
+        }
+    }
 
-    const app = ReactDOMServer.renderToString(<Index  />);
-    let template = getHTMLTamplate('EUGENI SSR', app, initData);
-
-    res.send(template)
 })
 
-
-
-
-app.listen(3001, () => console.log("3001"));
+app.listen(3000, () => console.log("3000"))

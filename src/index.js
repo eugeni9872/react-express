@@ -1,7 +1,16 @@
 import React from "react";
 import ReactDOM  from 'react-dom';
-import About from "./About";
+import About from "./about";
+import axios from 'axios'
+require("@babel/polyfill");
+
 export default class Index extends React.Component {
+
+    static async getData() {
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts/9');
+        const responseData = await response.data;
+        return responseData;
+    }
 
 
     constructor(props){
@@ -20,24 +29,19 @@ export default class Index extends React.Component {
         console.log("joder")
     }
     render() {
-        if(typeof window !== 'undefined') {
-            
+       
+            console.log(this.props)
             return (
                 <div>
-                    <h2>Hola: {this.state.name} </h2>
-                    <About />
+                    <h2>Hola: {this.props.data.name} </h2>
                 </div>
             )
-        }else {
-            return(<h2>Loading...</h2>)
-        }
     }
 }
 
 
 
 //Si estamos en la parte del cliente.
-if (typeof window !== 'undefined') {
+/* if (typeof window !== 'undefined') {
      ReactDOM.hydrate(<Index data={window.__APP_DATA__} />, document.getElementById('app'))
-}
-
+} */
