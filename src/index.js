@@ -1,13 +1,31 @@
 import React from "react";
-import Hola from './some';
-import ReactDOM from 'react-dom';
-class Index extends React.Component {
+import ReactDOM  from 'react-dom';
+import About from "./About";
+export default class Index extends React.Component {
 
 
+    componentDidMount() {
+        //window.__APP_DATA__ = {};
+        console.log("Index mount")
+    }
     render() {
-        
-        return <h2>HOla: {this.props.data} <Hola /></h2>
+        console.log(this.props)
+
+        return (<div>
+
+            <h2>HOla: </h2>
+
+            <h2>HOla Component: </h2>
+
+             <About />
+        </div>)
     }
 }
 
-export default Index;
+
+
+//Si estamos en la parte del cliente.
+if (typeof window !== 'undefined') {
+     ReactDOM.hydrate(<Index data={window.__APP_DATA__} />, document.getElementById('app'))
+}
+
