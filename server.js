@@ -37,8 +37,16 @@ app.use('/static', express.static('static'))
 
 app.get('*', (req,res) => {
 
+    let initData = {
+        name:'Eugeni',
+        posts: [
+            {title:'Title1', content:'Content1'},
+            {title:'Title2', content:'Content2'}
+        ]
+    }
+
     const app = ReactDOMServer.renderToString(<Index  />);
-    let template = getHTMLTamplate('EUGENI SSR', app, {someData: [1,2,3,4]});
+    let template = getHTMLTamplate('EUGENI SSR', app, initData);
 
     res.send(template)
 })
