@@ -1,6 +1,6 @@
 import React from "react";
 import Hola from './some';
-
+import ReactDOM from 'react-dom';
 class Index extends React.Component {
 
 
@@ -11,4 +11,3 @@ class Index extends React.Component {
 }
 
 export default Index;
-

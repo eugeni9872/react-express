@@ -6,7 +6,7 @@ const serverConfig = {
     target: 'node',
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: 'lib.node.js'
+      filename: 'server.js'
     },
     module: {
         rules: [
@@ -24,6 +24,10 @@ const serverConfig = {
 
 
 const clientConfig = {
+    output: {
+        path: path.resolve(__dirname, 'static'),
+        filename: 'bundle.js'
+    },
     module: {
         rules: [
           {
