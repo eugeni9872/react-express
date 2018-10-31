@@ -25,7 +25,7 @@ const serverConfig = {
 
 
 const clientConfig = {
-
+    entry: './lib/index.js',
     output: {
         path: path.resolve(__dirname, 'static'),
         filename: 'bundle.js'

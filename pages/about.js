@@ -16,8 +16,9 @@ class About extends React.Component{
     render() {
        
         return(
-            <div>
-                <h2>Hola {this.state.  name}</h2>
+            <div> 
+                <h1>Hola {this.state.name} bienvenido  a la página de about</h1>
+               
                 <button onClick={this.changeName}>Cambiar nombre</button>
             </div>            
         )

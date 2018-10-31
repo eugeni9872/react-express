@@ -1,8 +1,8 @@
 import express from 'express';
 import React from "react";
 import ReactDOMServer from 'react-dom/server';
-import App from './src/_app';
-import InitData from './lib/InitiaData';
+import App from './lib/_app';
+
 import { isValid, existPages, isValidFile, getCurrentComponent } from './lib/URLParser';
 
 const app =express();
