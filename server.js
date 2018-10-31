@@ -2,6 +2,7 @@ import express from 'express';
 import React from "react";
 import Rutas from './Rutas';
 import Index from './src/index';
+import {registro, App } from './src/_app';
 import ReactDOMServer from 'react-dom/server';
 
 const app =express();
@@ -35,31 +36,40 @@ const getHTMLTamplate = (title,app, data) => {
 app.use('/static', express.static('static'))
 
 app.get('*', (req,res) => {
-
-    let initData = {
-        name:'Eugeni',
-        posts: [
-            {title:'Title1', content:'Content1'},
-            {title:'Title2', content:'Content2'}
-        ]
-    }
-    for(let ruta of Rutas) {
-        if(req.url.match(ruta.path)) {
-           
-            const name = req.url == '/' ? '/index': req.url;
-            
-            Promise.all([
-                import(`./src${name}.js`)
-            ]).then(([Componente]) => {
-                Componente.default.getData().then(data => {
-                    const app = ReactDOMServer.renderToString(<Componente.default data={data}  />);
-                    let template = getHTMLTamplate('EUGENI SSR', app, data);
-                
-                    res.send(template)
-                })
-            })
+        let name = '/about';
+        let data = {
+            name:'Eugeni'
         }
-    }
+        Promise.all([
+            import(`./src${name}.js`)
+        ]).then(([Componente]) => {
+            let Comp = registro({data: true})(Componente.default);
+          
+            const com1 = ReactDOMServer.renderToString(<Comp {...data}/>);
+          
+            res.send(getHTMLTamplate('ee', com1,'nose'))
+        })
+    // for(let ruta of Rutas) {
+    //     if(req.url.match(ruta.path)) {
+           
+    //         const name = req.url == '/' ? '/index': req.url;
+            
+    //         Promise.all([
+    //             import(`./src${name}.js`)
+    //         ]).then(([Componente]) => {
+    //             Componente.default.getData().then(data => {
+    //                 registryApp(data,<Componente.default />).then((Comp) => {
+    //                     console.log(Comp)
+    //                 })
+    //                 console.log(component)
+    //                 const app = ReactDOMServer.renderToString(<Componente.default data={data}  />);
+    //                 let template = getHTMLTamplate('EUGENI SSR', app, data);
+                
+    //                 res.send(template)
+    //             })
+    //         })
+    //     }
+    // }
 
 })
 

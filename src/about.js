@@ -16,10 +16,10 @@ class About extends Component {
     }
 
     render() {
-       
+        
         return(
             <div>
-                <h2>{this.props.data.title}</h2>
+                <button onClick={() => this.alert("hola")}>Alert</button>
             </div>
         )
     }
@@ -27,6 +27,3 @@ class About extends Component {
 
 export default About;
 
-if (typeof window !== 'undefined') {
-    ReactDOM.hydrate(<About data={window.__APP_DATA__} />, document.getElementById('app'))
-}
