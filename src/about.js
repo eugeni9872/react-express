@@ -19,7 +19,8 @@ class About extends Component {
         
         return(
             <div>
-                <button onClick={() => this.alert("hola")}>Alert</button>
+                <h2>Some more content here</h2>
+                <button onClick={() => alert("hola")}>Alert</button>
             </div>
         )
     }

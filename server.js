@@ -1,17 +1,15 @@
 import express from 'express';
 import React from "react";
-import Rutas from './Rutas';
-import Index from './src/index';
-import {registro, App } from './src/_app';
 import ReactDOMServer from 'react-dom/server';
+import App from './src/_app';
+import InitData from './lib/InitiaData';
+import { isValid, existPages, isValidFile, getCurrentComponent } from './lib/URLParser';
 
 const app =express();
 
 
 
-
-
-const getHTMLTamplate = (title,app, data) => {
+const getHTMLTamplate = (title,app, object) => {
     return `
     <!DOCTYPE html>
         <html>
@@ -21,7 +19,7 @@ const getHTMLTamplate = (title,app, data) => {
             </head>
             <body>
                 
-                <script>window.__APP_DATA__=${JSON.stringify(data)}</script>
+                <script>window.__APP_DATA__= ${JSON.stringify(object)}</script>
                 <div id="app">${app}</div>
                 <script src="/static/bundle.js" async=""></script>
             </body>
@@ -31,45 +29,30 @@ const getHTMLTamplate = (title,app, data) => {
 
 
 
-
-
 app.use('/static', express.static('static'))
 
 app.get('*', (req,res) => {
-        let name = '/about';
-        let data = {
-            name:'Eugeni'
+
+    
+    //Buscar al componente y ejecutar el metodo "getInitalState" si existe.
+    let requestUrl = req.url  === '/' ? '/index': req.url;
+    //Si la url es valida, miramos que el componente exista.
+    if(isValid(requestUrl) !== false) {
+        //Si el archivo esta, lo mapeamos.
+        if(isValidFile(requestUrl) === true ) {
+            getCurrentComponent(requestUrl, (Component) => {
+                let currentView = ReactDOMServer.renderToString(<Component.default />)
+                let componente = ReactDOMServer.renderToString(<App currentView={currentView}  />)
+                res.send(getHTMLTamplate('EUGENI SSR', componente,{ currentView: currentView, currentPage:requestUrl }))
+            })
+        }else {
+            res.send({status: 404, message:'Not found'})
         }
-        Promise.all([
-            import(`./src${name}.js`)
-        ]).then(([Componente]) => {
-            let Comp = registro({data: true})(Componente.default);
-          
-            const com1 = ReactDOMServer.renderToString(<Comp {...data}/>);
-          
-            res.send(getHTMLTamplate('ee', com1,'nose'))
-        })
-    // for(let ruta of Rutas) {
-    //     if(req.url.match(ruta.path)) {
-           
-    //         const name = req.url == '/' ? '/index': req.url;
-            
-    //         Promise.all([
-    //             import(`./src${name}.js`)
-    //         ]).then(([Componente]) => {
-    //             Componente.default.getData().then(data => {
-    //                 registryApp(data,<Componente.default />).then((Comp) => {
-    //                     console.log(Comp)
-    //                 })
-    //                 console.log(component)
-    //                 const app = ReactDOMServer.renderToString(<Componente.default data={data}  />);
-    //                 let template = getHTMLTamplate('EUGENI SSR', app, data);
-                
-    //                 res.send(template)
-    //             })
-    //         })
-    //     }
-    // }
+
+    }
+
+
+
 
 })
 

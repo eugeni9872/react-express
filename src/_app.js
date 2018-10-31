@@ -1,20 +1,24 @@
 import React, {  Component} from 'react';
-import ReactDOM from 'react-dom';
 
-export class App extends Component {
+class App extends Component {
 
-
-    render(){
-        return(<h2>Hola</h2>)
-    }
-}
-
-export const registro = (props) => (Wrapper) =>{
-    if(typeof window !== 'undefined') {
-        ReactDOM.hydrate(<Wrapper {...props} />, document.getElementById('app'))
+    constructor(props){
+      super(props);
+      this.state = {
+        component: null
+      }
     }
 
-    return Wrapper 
-}
+
+    render() {
+        return(
+          <div dangerouslySetInnerHTML={{__html: (this.props.currentView)}}></div>
+        )
+    }
+  }
+
+
+  export default App;
+
 
 
