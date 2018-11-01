@@ -1,30 +1,14 @@
 import express from 'express';
 import React from "react";
 import ReactDOMServer from 'react-dom/server';
-
+import { getHTMLTamplate } from './lib/utils';
 import { isValid, existPages, isValidFile, getCurrentComponent } from './lib/URLParser';
 
 const app =express();
 existPages();
 
 
-const getHTMLTamplate = (title,app, object) => {
-    return `
-    <!DOCTYPE html>
-        <html>
-            <head>
-                <title>${title}</title>
-                <link rel="stylesheet" type="text/css" href="/static/antd.min.css" />
-            </head>
-            <body>
-                
-                <script>window.__APP_DATA__= ${JSON.stringify(object)}</script>
-                <div id="app">${app}</div>
-                <script src="/static/bundle.js" async=""></script>
-            </body>
-        </html>
-    `
-}
+
 
 
 

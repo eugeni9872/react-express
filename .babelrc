@@ -4,5 +4,5 @@
       "@babel/plugin-proposal-class-properties",
       "dynamic-import-node",
       "@babel/plugin-transform-async-to-generator"
-    ]
+      ]
 }

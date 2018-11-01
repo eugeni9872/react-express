@@ -3,18 +3,18 @@ import React from 'react';
 
 class Index extends React.Component{
 
-    static getInitalData = ({ res }) => {
+    static  getInitalData = async ({ res }) => {
 
         //Aqui podemos ver si el usuario tiene una sesion por ejemplo.
 
         //Redireccionar 
         //res.redirect('/about')
-        
+        console.log(res)
         return {seeMe: true}
     }
 
     render() {
-        console.log(this.props)
+        
 
         return(
             <div>
