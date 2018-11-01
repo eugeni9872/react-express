@@ -1,12 +1,11 @@
 import React from 'react';
-
+import axios from 'axios';
 
 class Index extends React.Component{
 
     static  getInitalData = async ({ res }) => {
 
-        
-        return {seeMe: true}
+        return {}
     }
 
     render() {

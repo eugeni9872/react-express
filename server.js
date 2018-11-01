@@ -26,7 +26,7 @@ app.get('*', (req,res) => {
             
             getCurrentComponent(req,requestUrl, (CurrentData) => {
                 let {Component, data } = CurrentData;
-                let componente = ReactDOMServer.renderToString(<Component.default   />)
+                let componente = ReactDOMServer.renderToString(<Component.default {...data}   />)
 
                 res.send(getHTMLTamplate('EUGENI SSR', componente,{ 
                         currentPage:requestUrl,
