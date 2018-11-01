@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack --mode development -w",
-    "build": "webpack --mode production",
+    "build": "webpack --mode production && node ./dist/server.js",
     "dev": "nodemon ./dist/server.js"
   },
   "devDependencies": {

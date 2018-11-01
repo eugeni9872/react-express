@@ -1,12 +1,11 @@
 import express from 'express';
 import React from "react";
 import ReactDOMServer from 'react-dom/server';
-import App from './lib/_app';
 
 import { isValid, existPages, isValidFile, getCurrentComponent } from './lib/URLParser';
 
 const app =express();
-
+existPages();
 
 
 const getHTMLTamplate = (title,app, object) => {
@@ -43,7 +42,6 @@ app.get('*', (req,res) => {
             
             getCurrentComponent(req,requestUrl, (CurrentData) => {
                 let {Component, data } = CurrentData;
-                //let currentView = ReactDOMServer.renderToString(<Component.default {...data} />)
                 let componente = ReactDOMServer.renderToString(<Component.default   />)
 
                 res.send(getHTMLTamplate('EUGENI SSR', componente,{ 
