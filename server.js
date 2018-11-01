@@ -40,10 +40,16 @@ app.get('*', (req,res) => {
     if(isValid(requestUrl) !== false) {
         //Si el archivo esta, lo mapeamos.
         if(isValidFile(requestUrl) === true ) {
-            getCurrentComponent(requestUrl, (Component) => {
-                let currentView = ReactDOMServer.renderToString(<Component.default />)
+            
+            getCurrentComponent(req,requestUrl, (CurrentData) => {
+                let {Component, data } = CurrentData;
+                let currentView = ReactDOMServer.renderToString(<Component.default {...data} />)
                 let componente = ReactDOMServer.renderToString(<App currentView={currentView}  />)
-                res.send(getHTMLTamplate('EUGENI SSR', componente,{ currentView: currentView, currentPage:requestUrl }))
+
+                res.send(getHTMLTamplate('EUGENI SSR', componente,{ 
+                        currentView, currentPage:requestUrl,
+                        props: data
+                }))
             })
         }else {
             res.send({status: 404, message:'Not found'})
