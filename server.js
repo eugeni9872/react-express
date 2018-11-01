@@ -43,11 +43,11 @@ app.get('*', (req,res) => {
             
             getCurrentComponent(req,requestUrl, (CurrentData) => {
                 let {Component, data } = CurrentData;
-                let currentView = ReactDOMServer.renderToString(<Component.default {...data} />)
-                let componente = ReactDOMServer.renderToString(<App currentView={currentView}  />)
+                //let currentView = ReactDOMServer.renderToString(<Component.default {...data} />)
+                let componente = ReactDOMServer.renderToString(<Component.default   />)
 
                 res.send(getHTMLTamplate('EUGENI SSR', componente,{ 
-                        currentView, currentPage:requestUrl,
+                        currentPage:requestUrl,
                         props: data
                 }))
             })
