@@ -6,7 +6,7 @@ import { isValid, existPages, isValidFile, getCurrentComponent } from './lib/URL
 
 const app =express();
 existPages();
-
+const port = 3000;
 
 
 
@@ -44,4 +44,4 @@ app.get('*', (req,res) => {
 
 })
 
-app.listen(3000, () => console.log("3000"))
+app.listen(port, () => console.log(`Server in ${port}`))
