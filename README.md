@@ -3,7 +3,7 @@
     $ yarn
    
 	
-	Desarollo
+	Desarrollo
 	$ yarn dev 
 	$ yarn webpack
 	
