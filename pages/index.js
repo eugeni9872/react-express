@@ -1,10 +1,10 @@
 import React from 'react';
-import axios from 'axios';
-
+import { savePosts } from '../reduxActions/PostsActions';
 class Index extends React.Component{
 
-    static  getInitalData = async ({ res }) => {
-
+    static  getInitalData = async ({ req, res }) => {
+        let dispatch = await req.reduxState.dispatch;
+        await dispatch(savePosts([1,2,3]))
         return {}
     }
 

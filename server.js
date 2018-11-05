@@ -24,14 +24,21 @@ app.get('*', (req,res) => {
     if(isValid(requestUrl) !== false) {
         //Si el archivo esta, lo mapeamos.
         if(isValidFile(requestUrl) === true ) {
+
+            //Vamos a mirar si ya tenemos el redux registrado en nuestro request.
+            if( typeof req.reduxStore !== 'undefined') {
+                //check 
+            }            
             
-            getCurrentComponent(req,requestUrl, (CurrentData) => {
+            getCurrentComponent({req,res},requestUrl, (CurrentData) => {
                 let {Component, data } = CurrentData;
                 let componente = ReactDOMServer.renderToString
                 (
                 <Provider store={store}>
                     <Component.default {...data} />
                 </Provider>)
+                
+
 
                 res.send(getHTMLTamplate('EUGENI SSR', componente,JSON.stringify({ 
                     currentPage:requestUrl,
