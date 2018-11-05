@@ -2,8 +2,9 @@ import express from 'express';
 import React from "react";
 import ReactDOMServer from 'react-dom/server';
 import { getHTMLTamplate } from './lib/utils';
+import { Provider } from 'react-redux';
 import { isValid, existPages, isValidFile, getCurrentComponent } from './lib/URLParser';
-
+import  store  from './lib/redux';
 const app =express();
 existPages();
 const port = 3000;
@@ -26,12 +27,16 @@ app.get('*', (req,res) => {
             
             getCurrentComponent(req,requestUrl, (CurrentData) => {
                 let {Component, data } = CurrentData;
-                let componente = ReactDOMServer.renderToString(<Component.default {...data}   />)
+                let componente = ReactDOMServer.renderToString
+                (
+                <Provider store={store}>
+                    <Component.default {...data} />
+                </Provider>)
 
-                res.send(getHTMLTamplate('EUGENI SSR', componente,{ 
-                        currentPage:requestUrl,
-                        props: data
-                }))
+                res.send(getHTMLTamplate('EUGENI SSR', componente,JSON.stringify({ 
+                    currentPage:requestUrl,
+                    props: data
+                })))
             })
         }else {
             res.send({status: 404, message:'Not found'})
