@@ -1,19 +1,16 @@
 import React from 'react';
-import { savePosts } from '../reduxActions/PostsActions';
 class Index extends React.Component{
 
-    static  getInitalData = async ({ req, res }) => {
-        let dispatch = await req.reduxState.dispatch;
-        await dispatch(savePosts([1,2,3]))
-        return {}
-    }
+     static  getInitalData = async ({ req, res }) => {
+         return {name: "Eugeni"}
+     }
 
     render() {
         
 
         return(
             <div>
-                <h2>Hola Index</h2>
+                <h2>Hola {this.props.name} </h2>
                 <button onClick={() => alert("hii")}>
                     Saludar
                 </button>

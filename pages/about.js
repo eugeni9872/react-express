@@ -1,29 +1,24 @@
-import React from 'react';
+import React, { Component }  from 'react';
+import { connect } from 'react-redux';
+import { savePosts } from '../reduxActions/PostsActions';
 
+class Posts extends Component {
 
-class About extends React.Component{
-
-
-
-    constructor(props){
-        super(props);
-        this.state = {
-            name: 'Eugeni'
-        }
+    static  getInitalData = async ({ req, res }) => {
+        
+        return {name: "Eugeni"}
     }
 
-    changeName = () => {
-        this.setState({name: prompt("Dime tu nombre: ")})
-    }
-    render() {
+
+    render(){
         return(
-            <div> 
-                <h1>Hola {this.state.name} bienvenido  a la página de about</h1>
-               
-                <button onClick={this.changeName}>Cambiar nombre</button>
-            </div>            
+            <div  style={{ background: '#ECECEC', padding: '30px'}}>   
+                <h2>HI {this.props.name} </h2>
+            </div>
         )
     }
+
+    
 }
 
-export default About;
+export default connect()(Posts);

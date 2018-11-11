@@ -3,8 +3,8 @@ import React from "react";
 import ReactDOMServer from 'react-dom/server';
 import { getHTMLTamplate } from './lib/utils';
 import { Provider } from 'react-redux';
+import { makeStore, reducers } from './lib/redux';
 import { isValid, existPages, isValidFile, getCurrentComponent } from './lib/URLParser';
-import  store  from './lib/redux';
 const app =express();
 existPages();
 const port = 3000;
@@ -15,7 +15,7 @@ const port = 3000;
 
 app.use('/static', express.static('static'))
 
-app.get('*', (req,res) => {
+app.get('*', async (req,res) => {
 
     
     //Buscar al componente y ejecutar el metodo "getInitalState" si existe.
@@ -26,17 +26,22 @@ app.get('*', (req,res) => {
         if(isValidFile(requestUrl) === true ) {
 
             //Vamos a mirar si ya tenemos el redux registrado en nuestro request.
-            if( typeof req.reduxStore !== 'undefined') {
-                //check 
-            }            
+             
             
-            getCurrentComponent({req,res},requestUrl, (CurrentData) => {
+            
+            getCurrentComponent({req,res},requestUrl, async (CurrentData, request) => {
                 let {Component, data } = CurrentData;
+                    if(typeof req.redux === 'undefined') {
+                       req.redux = makeStore(reducers, {...data});
+                    }
                 let componente = ReactDOMServer.renderToString
+                
                 (
-                <Provider store={store}>
-                    <Component.default {...data} />
-                </Provider>)
+                
+                    <Provider store={req.redux}>
+                        <Component.default {...data} />
+                    </Provider>
+                )
                 
 
 
