@@ -1,15 +1,15 @@
 import React, { Component }  from 'react';
 import axios from 'axios';
 import { Card, Col, Row } from 'antd';
-
-
 class Posts extends Component {
 
-    static getInitalData = async () => {
+    static getInitalData = async ({ req }) => {
         const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
         const dataResponse = await response.data;
+      
         return {posts: dataResponse}
     }
+
 
     render(){
         return(

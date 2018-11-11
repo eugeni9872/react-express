@@ -1,5 +1,22 @@
+require("@babel/polyfill");
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const fs = require('fs');
+
+const getFiles = () => {
+  let files =  fs.readdirSync('./pages')
+  .filter(file => file.match(/.*\.js$/))
+  .map(file => {
+    return {
+      name: file.substring(0, file.length-3),
+      path:'./pages/'+file
+    }
+  }).reduce((i, file) => {
+    i[file.name] = ["babel-polyfill","./lib/index.js",file.path]
+    return i;
+  }, {})
+
+  return files;
+}
 
 
 const serverConfig = {
@@ -25,10 +42,12 @@ const serverConfig = {
 
 
 const clientConfig = {
-    entry: ['@babel/polyfill','./lib/index.js'],
-    output: {
+/*     entry: ['@babel/polyfill','./lib/index.js'],
+ */     
+      entry:  getFiles,
+      output: {
         path: path.resolve(__dirname, 'static'),
-        filename: 'bundle.js'
+        filename: '[name].bundle.js'
     },
     module: {
         rules: [
