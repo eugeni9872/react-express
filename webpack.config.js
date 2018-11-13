@@ -1,4 +1,3 @@
-require("@babel/polyfill");
 const path = require('path');
 const fs = require('fs');
 
@@ -36,14 +35,13 @@ const serverConfig = {
               }
             },
         ]
-    },
+    }
 
   };
 
 
 const clientConfig = {
-/*     entry: ['@babel/polyfill','./lib/index.js'],
- */     
+
       entry:  getFiles,
       output: {
         path: path.resolve(__dirname, 'static'),
@@ -63,5 +61,6 @@ const clientConfig = {
        
       }
 }
+
 
 module.exports = [serverConfig,clientConfig]
