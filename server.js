@@ -2,12 +2,11 @@ import express from 'express';
 import React from "react";
 import ReactDOMServer from 'react-dom/server';
 import { getHTMLTamplate } from './lib/utils';
-import { isValid, existPages, isValidFile, getCurrentComponent, getRouteWithParams} from './lib/URLParser';
+import { isValid, isValidFile, getCurrentComponent, getRouteWithParams} from './lib/URLParser';
+const path = require('path');
 const app =express();
-existPages();
 const port = 3000;
-
-
+const server = require('bling-server')
 
 
 
@@ -24,28 +23,14 @@ app.get('*', async (req,res) => {
         if(isValidFile(requestUrl.componente) === true ) {
 
             //Vamos a mirar si ya tenemos el redux registrado en nuestro request.
-             
-            
-            req.params = requestUrl.params
-            getCurrentComponent({req,res},requestUrl.componente, async (CurrentData, request) => {
-                let {Component, data } = CurrentData;
- 
-                let componente = ReactDOMServer.renderToString
-                
-                (
-                
-                        <Component.default {...data} />
-                )
-                
+            req.params =  requestUrl.params
 
-
-                res.send(getHTMLTamplate('EUGENI SSR', componente,JSON.stringify({ 
-                    currentPage:requestUrl,
-                    props: data
-                }),requestUrl.componente))
-            })
+            let {Component, data } = await getCurrentComponent({req,res},requestUrl.componente );
+            let StringComponent = ReactDOMServer.renderToString ( <Component.default {...data} />)
+            let html = getHTMLTamplate('EUGENI SSR', StringComponent,JSON.stringify({currentPage:requestUrl,props: data}),requestUrl.componente)
+            res.send(html)
         }else {
-            res.send({status: 404, message:'Not found'})
+            res.sendFile( path.resolve('html','404.html') )
         }
 
     }

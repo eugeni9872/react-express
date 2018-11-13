@@ -4,10 +4,10 @@ import { Card, Col, Row, Button } from 'antd';
 
 class Index extends Component {
 
-    static getInitalData = async ({ req }) => {
+    static getInitalData = async (ctx) => {
         const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
         const dataResponse = await response.data;
-      
+       
         return {posts: dataResponse}
     }
 
@@ -15,7 +15,7 @@ class Index extends Component {
     render(){
         return(
             <div  style={{ background: '#ECECEC', padding: '30px'}}>   
-                <h2 style={{textAlign:'center'}}>Mostrando 100 posts </h2>
+                <h2 style={{textAlign:'center'}}>Mostrando {this.props.posts.length} posts </h2>
                 <Row  gutter={16}>
                     {this.props.posts.map((post, index) =>
                         (   

@@ -20,7 +20,7 @@ const getFiles = () => {
 
 
 const serverConfig = {
-    entry: './server.js',
+    entry: ['@babel/polyfill', './server.js'],
     target: 'node',
     output: {
       path: path.resolve(__dirname, 'dist'),

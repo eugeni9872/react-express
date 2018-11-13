@@ -1,0 +1,8 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Bling server configuration",
+  "main": "index.js",
+  "author": "Eugeni Bejan",
+  "license": "MIT"
+}
