@@ -41,7 +41,6 @@ const serverConfig = {
 
 
 const clientConfig = {
-
       entry:  getFiles,
       output: {
         path: path.resolve(__dirname, 'static'),

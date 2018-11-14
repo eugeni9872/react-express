@@ -1,6 +1,5 @@
 import React, { Component }  from 'react';
 import { connect } from 'react-redux';
-import { savePosts } from '../reduxActions/PostsActions';
 
 class Posts extends Component {
 
