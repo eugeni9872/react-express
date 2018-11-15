@@ -31,7 +31,7 @@ class Post extends Component {
         return (
             <div>
                 <h2>TItle: {this.props.post.title}</h2>
-               <div>TItle: {this.props.post.body}</div>
+                <div>TItle: {this.props.post.body}</div>
             </div>
         )
     }

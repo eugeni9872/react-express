@@ -2,7 +2,7 @@ import express from 'express';
 import React from "react";
 import ReactDOMServer from 'react-dom/server';
 import { getHTMLTamplate } from './lib/utils';
-import { isValid, isValidFile, getCurrentComponent, getRouteWithParams} from './lib/URLParser';
+import { isValidFile, getCurrentComponent, getRouteWithParams} from './lib/URLParser';
 const path = require('path');
 const app =express();
 const port = 3000;
@@ -17,21 +17,22 @@ app.get('*', async (req,res) => {
     let requestUrl = getRouteWithParams(req.url);
 
     //Si la url es valida, miramos que el componente exista.
-    if(isValid(requestUrl.componente) !== false) {
+    // if(isValid(requestUrl.componente) !== false) {
         //Si el archivo esta, lo mapeamos.
         if(isValidFile(requestUrl.componente) === true ) {
 
             //Vamos a mirar si ya tenemos el redux registrado en nuestro request.
             req.params =  requestUrl.params
-            let {Component, data } = await getCurrentComponent({req,res},requestUrl.componente );
-            let StringComponent = ReactDOMServer.renderToString( <Component.default {...data} />)
-            let html = getHTMLTamplate('EUGENI SSR', StringComponent,JSON.stringify({currentPage:requestUrl,props: data}),requestUrl.componente)
+            let Component = await getCurrentComponent({req,res},requestUrl.componente );
+            let StringComponent = ReactDOMServer.renderToString(Component)
+            let windowProps = {currentPage:requestUrl,props: Component.props};
+            let html = getHTMLTamplate('EUGENI SSR', StringComponent,JSON.stringify(windowProps))
             res.send(html)
         }else {
             res.sendFile( path.resolve('html','404.html') )
         }
 
-    }
+    // }
 
 
 
