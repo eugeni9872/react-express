@@ -5,16 +5,17 @@ class Post extends Component {
 
     
     static getInitalData = async (ctx) => {
-      
-try{
-    const post = await axios.get(`https://jsonplaceholder.typicode.com/posts/${ctx.params}`)
-    return {post : post.data}
-}  catch(e) {
-    ctx.res.redirect('/notfoud')
-    return {}
-}    
+
+        try{
+            const post = await axios.get(`https://jsonplaceholder.typicode.com/posts/${ctx.params}`)
+            return {post : post.data}
+        }  catch(e) {
+            ctx.res.redirect('/')
+            return {}
+        }    
         
     }
+
     constructor(props) {
        
         super(props);
@@ -24,12 +25,6 @@ try{
         }
     }
 
-
-    componentDidMount() {
-        console.log(this.props);
-
-
-    }
 
     render() {
         

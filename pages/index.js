@@ -15,7 +15,7 @@ class Index extends Component {
     render(){
         return(
             <div  style={{ background: '#ECECEC', padding: '30px'}}>   
-                <h2 style={{textAlign:'center'}}>Mostrando {this.props.posts.length} posts </h2>
+                <h2 style={{textAlign:'center'}}>Mostrando {this.props.posts.length-1} posts </h2>
                 <Row  gutter={16}>
                     {this.props.posts.map((post, index) =>
                         (   
