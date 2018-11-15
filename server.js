@@ -10,7 +10,6 @@ const port = 3000;
 
 
 app.use('/static', express.static('static'))
-
 app.get('*', async (req,res) => {
 
     //Buscar al componente y ejecutar el metodo "getInitalState" si existe.
@@ -27,7 +26,9 @@ app.get('*', async (req,res) => {
             let StringComponent = ReactDOMServer.renderToString(Component)
             let windowProps = {currentPage:requestUrl,props: Component.props};
             let html = getHTMLTamplate('EUGENI SSR', StringComponent,JSON.stringify(windowProps))
-            res.send(html)
+            if(!res.headersSent){
+                res.send(html)
+            }
         }else {
             res.sendFile( path.resolve('html','404.html') )
         }

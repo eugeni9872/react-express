@@ -2,7 +2,7 @@ import React, { Component }  from 'react';
 
 class Posts extends Component {
 
-    static  getInitalData = async ({ req, res }) => {
+    static  getInitalData = async ({req, res}) => {
         
         return {name: "Eugeni"}
     }

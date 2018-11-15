@@ -4,7 +4,7 @@ import { Card, Col, Row, Button } from 'antd';
 
 class Index extends Component {
 
-    static getInitalData = async (ctx) => {
+    static getInitalData = async () => {
         const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
         const dataResponse = await response.data;
        

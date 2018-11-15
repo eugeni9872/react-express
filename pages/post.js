@@ -4,10 +4,10 @@ import axios from 'axios';
 class Post extends Component {
 
     
-    static getInitalData = async (ctx) => {
-
+    static getInitalData = async ({ req, res}) => {
+        
         try{
-            const post = await axios.get(`https://jsonplaceholder.typicode.com/posts/${ctx.params}`)
+            const post = await axios.get(`https://jsonplaceholder.typicode.com/posts/${req.params}`)
             return {post : post.data}
         }  catch(e) {
             ctx.res.redirect('/')
